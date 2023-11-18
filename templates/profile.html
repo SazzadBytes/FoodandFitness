@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Profile - FoodandFitness</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <main>
+    <!-- Profile section design -->
+    {% for n in SData %}
+    <section style="background-color: #eee;">
+      <div class="container py-3">
+        <div class="row">
+          <div class="col">
+            <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+              <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}"> <button class="btn btn-success"> <--Back to home</button> </a></li>
+                <li class="mx-4">
+      <!-- After Sign in Check Food -->
+                <button type="button" class="btn btn-success mx-4" data-bs-toggle="modal" data-bs-target="#cfood">
+                Check Food
+                </button>
+
+                <div class="modal fade" id="cfood" tabindex="-1" aria-labelledby="cfoodLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="updatebmiLabel">Check</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="formtype" value="cfood">
+                            <label for="#" class="mb-3">Enter Food Name:</label>
+                            <input type="text" class="form-control" name="cfoodname">
+                            <div class="modal-footer">
+
+                              <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#check">
+                                Check
+                              </button>
+
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal fade" id="check" tabindex="-1" aria-labelledby="updatepressureLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="updatepressureLabel">Status</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          {% if record %}
+                            {% if record.bmi < 23 %}
+                              <h1>Your BMI is {{record.bmi}} and this food is Save for your Health</h1>
+                            {% else %}
+                              <h1>Your BMI is {{ record.bmi }} and this food is NOT Save for your Health</h1>
+                            {% endif %}
+                          {% endif %}                        
+                        </div>
+                      </div>
+                    </div>
+          </div>
+
+      <!-- After Sign in Chaeck Food End -->
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#updatebmi">
+                    Update BMI
+                  </button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="updatebmi" tabindex="-1" aria-labelledby="updatebmiLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="updatebmiLabel">Update</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="formtype" value="ubmi">
+                            <label for="#" class="mb-3">Enter current BMI:</label>
+                            <input type="text" class="form-control" name="ubmi">
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+
+                <!-- Update presure section -->
+                <li>
+                  <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#updatepressure">
+                    Update BloodPressure
+                  </button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="updatepressure" tabindex="-1" aria-labelledby="updatepressureLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="updatepressureLabel">Update</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="formtype" value="pressure">
+                            <label for="#" class="mb-3">Enter current BloodPressure:</label>
+                            <input type="text" class="form-control" name="pressure">
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <!--  Blood Sugar section  -->
+                <li class="mx-4">
+                  <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#updatesugar">
+                    Update BloodSugar
+                  </button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="updatesugar" tabindex="-1" aria-labelledby="updatesugarLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="updatesugarLabel">Update</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="formtype" value="sugar">
+                            <label for="#" class="mb-3">Enter current BloodSugar:</label>
+                            <input type="text" class="form-control" name="sugar">
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </li> 
+                <!--  COnnect Device  -->
+                <li class=" ms-auto">
+                  <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#">
+                    Connect with your smart device
+                  </button>
+              </ol>
+            </nav>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card mb-4">
+              <div class="card-body text-center">
+                {% if n.gender == 'male' %}
+                <img src="../static/img/male.png" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 150px;">
+                {% else %}
+                <img src="../static/img/female.png" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 150px;">
+                {% endif %}
+
+                <h5 class="my-3">{{ n.fname }}</h5>
+                {% if record %}
+                <p class="text-muted mb-1">BMI:{{ record.bmi }}</p>
+                <p class="text-muted mb-1">Blood Presure:{{ record.bp }}</p>
+                <p class="text-muted mb-4">Blood Sugar:{{ record.bs }}</p>
+                {% endif %}
+                <div class="d-flex justify-content-center mb-2">
+                  <a href=""><button type="button" class="btn btn-outline-primary ms-1">Update Data</button></a>
+                  <a href="/logout"><button type="button" class="btn btn-outline-primary ms-1">Logout</button></a>
+                </div>
+              </div>
+            </div>
+
+
+      <!-- Suggestion Start -->  
+              {% if record %}
+              {% if record.bp == 'High' %}
+              <div class="card mb-4 mb-lg-0">
+                <div class="card-body p-0">
+                  <ul class="list-group list-group-flush rounded-3">
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      <i class="fas fa-globe fa-lg text-warning"></i>
+                      <p class="mb-0"> <mark>Your Suggestion</mark></p>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      <i class="fab fa-github fa-lg" style="color: #333333;"></i>
+                      <p class="mb-0">1. Run 2500 steps regularly</p>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
+                      <p class="mb-0">2. Swim 100m</p>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
+                      <p class="mb-0"> 3. Eat healthy food</p>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
+                      <p class="mb-0">
+                        4. Eat green vegetable and fruits   
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {% else %}
+              <div class="card mb-4 mb-lg-0">
+                <div class="card-body p-0">
+                  <ul class="list-group list-group-flush rounded-3">
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      <i class="fas fa-globe fa-lg text-warning"></i>
+                      <p class="mb-0"> <mark>Your Suggestion</mark></p>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      <i class="fab fa-github fa-lg" style="color: #333333;"></i>
+                      <p class="mb-0">1.Take Rest</p>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
+                      <p class="mb-0">2. Sleep more than 8 hours</p>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
+                      <p class="mb-0"> 3. Eat healthy food</p>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                      <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
+                      <p class="mb-0">
+                        4. Eat green vegetable and fruits   
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              {% endif %}
+              {% endif %}   
+
+      <!-- Suggestion End -->
+
+          </div>
+          <div class="col-lg-8">
+            <div class="card mb-4">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Full Name</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{ n.fname }}</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Email</p>
+                  </div>
+                  <div class="col-sm-9">
+                    
+                    <p class="text-muted mb-0">{{ n.umail }}</p>
+                    
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Phone</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{ n.pnumber }}</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Gender</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{ n.gender }}</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Date of Birth</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{ n.dob }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card mb-4 mb-md-0">
+                  <div class="card-body">
+                    <p class="mb-4"><span class="text-primary font-italic me-1">Your weekly target:</span>
+                    </p>
+                    <p class="mb-1" style="font-size: .77rem;">Swim 100 meter</p>
+                    <div class="progress rounded" style="height: 5px;">
+                      <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="mt-4 mb-1" style="font-size: .77rem;">Walk 2500 meter</p>
+                    <div class="progress rounded" style="height: 5px;">
+                      <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="mt-4 mb-1" style="font-size: .77rem;">Sleep 100 hour</p>
+                    <div class="progress rounded" style="height: 5px;">
+                      <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="mt-4 mb-1" style="font-size: .77rem;">Eat 200 cals</p>
+                    <div class="progress rounded" style="height: 5px;">
+                      <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="mt-4 mb-1" style="font-size: .77rem;">Study 100 hour</p>
+                    <div class="progress rounded mb-2" style="height: 5px;">
+                      <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card mb-4 mb-md-0">
+                  <div class="card-body">
+                    <p class="mb-4"><span class="text-primary font-italic me-1">Your recent activity:</span>
+                    </p>
+                    <p class="mb-1" style="font-size: .77rem;">Swim 90 meter</p>
+                    <div class="progress rounded" style="height: 5px;">
+                      <div class="progress-bar" role="progressbar" style="width: 90%" aria-valuenow="80"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="mt-4 mb-1" style="font-size: .77rem;">Walk 2000 steps</p>
+                    <div class="progress rounded" style="height: 5px;">
+                      <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="mt-4 mb-1" style="font-size: .77rem;">Sleep 7 hour</p>
+                    <div class="progress rounded" style="height: 5px;">
+                      <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="mt-4 mb-1" style="font-size: .77rem;">Eat 200 cals</p>
+                    <div class="progress rounded" style="height: 5px;">
+                      <div class="progress-bar" role="progressbar" style="width: 55%" aria-valuenow="55"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="mt-4 mb-1" style="font-size: .77rem;">Study 12 hour</p>
+                    <div class="progress rounded mb-2" style="height: 5px;">
+                      <div class="progress-bar" role="progressbar" style="width: 66%" aria-valuenow="66"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </section>
+      {% endfor %}
+      <!-- Profile section end -->
+  </main>
+    <footer>
+      <!-- place footer here -->
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+      integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Blood Sugar</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+</head>
+
+<body>
+  <main>
+  <!-- Food tips strat -->
+{% for n in sugarData %}
+  <div class="modal modal-tour position-static d-block bg-light py-3" tabindex="-1" role="dialog" id="modalTour">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-body p-5">
+          <h2 class="fw-bold mb-0">{{ n.sugartype }}</h2>
+  
+          <ul class="d-grid gap-4 my-5 list-unstyled">
+            <li class="d-flex gap-4">
+              <div>
+                <h5 class="mb-0">What to do</h5>
+                <p>{{ n.sugardescription }}</p>
+              </div>
+            </li>
+            <!--
+            <li class="d-flex gap-4">
+              <div>
+                <h5 class="mb-0">Bookmarks</h5>
+                Save items you love for easy access later.
+              </div>
+            </li>
+            <li class="d-flex gap-4">
+              <div>
+                <h5 class="mb-0">Video embeds</h5>
+                Share videos wherever you go.
+              </div>
+            </li>
+            <li class="d-flex gap-4">
+              <div>
+                <h5 class="mb-0">One more</h5>
+                Share videos wherever you go.
+              </div>
+            </li>
+            <li class="d-flex gap-4">
+              <div>
+                <h5 class="mb-0">And More</h5>
+                Share videos wherever you go.
+              </div>
+            </li>
+            -->
+          </ul>
+          <button type="button" class="btn btn-lg btn-primary w-100" data-bs-dismiss="modal">Great, thanks! Save PDF</button>
+          <a href="{% url 'home' %}"><button type="button" class="btn btn-lg btn-primary mt-2 w-100" data-bs-dismiss="modal">Back to Home</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+
+  <!-- Food tips end -->
+  </main>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
